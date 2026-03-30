@@ -37,12 +37,6 @@ jobs:
           # and tags (default 1).
           fetch-depth: '0'
 
-      # System update and pre-requisite install
-      - name: System setup
-        run: |
-          sudo apt update
-          sudo apt upgrade -y
-
       # Check if any docker/fedora/* file changed in the last commit.
       # See also
       # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
