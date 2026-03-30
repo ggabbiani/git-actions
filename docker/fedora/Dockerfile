@@ -30,7 +30,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia del codice della Action
 COPY entrypoint.sh .
 
-# 5. Permessi e Entrypoint
+# Permessi e Entrypoint
 RUN chmod +x /app/entrypoint.sh
 RUN mkdir /import
 
