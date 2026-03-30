@@ -1,0 +1,10 @@
+{
+    "fileHeaderComment.parameter": {
+        "*": {
+            "project_long": "Git Actions",
+            "project_short": "GA",
+            "project_year": 2026
+        }
+    },
+    "fileHeaderComment.template": {},
+}
