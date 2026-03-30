@@ -1,3 +1,3 @@
-bin/__pycache__/ofl.cpython-313.pyc
 bin/template.sh
-docker/fedora/bin
+docker/fedora/app
+app/__pycache__/ofl.cpython-313.pyc

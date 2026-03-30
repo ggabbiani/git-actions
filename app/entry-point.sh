@@ -6,8 +6,8 @@
 #
 set -e # exit immediately in case of error
 ROOT="$(realpath $(dirname $0)/..)"
-BIN=$ROOT/bin
-. $ROOT/bin/functions.sh
+APP=$ROOT/app
+. $APP/functions.sh
 trap 'on_exit $? $test' EXIT
 
 help() {
@@ -104,7 +104,7 @@ shift 2
 case "$COMMAND" in
   'native')
     # NOTA: crea unscaled-$PICTURE
-  	$BIN/make-picture.py $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
+  	$APP/make-picture.py $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
     magick convert unscaled-$PICTURE $RESIZE $PICTURE &>/dev/null
     rm unscaled-$PICTURE
     ;;

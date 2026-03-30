@@ -25,7 +25,7 @@ clean:
 
 .build:
 	$(call target-prologue)
-	cd $(TAG) && cp -a $(BIN) . && $(BUILD_CMD) -t $(IMAGE):$(TAG) .
+	cd $(TAG) && cp -a $(APP) . && $(BUILD_CMD) -t $(IMAGE):$(TAG) .
 	$(call target-epilogue-success)
 
 fedora: TAG=fedora
