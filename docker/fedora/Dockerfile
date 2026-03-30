@@ -28,10 +28,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia del codice della Action
-COPY entrypoint.sh .
+COPY bin/functions.sh bin/entrypoint.sh bin/ofl.py bin/make-picture.py .
 
 # Permessi e Entrypoint
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/functions.sh /app/entrypoint.sh /app/ofl.py /app/make-picture.py
 RUN mkdir /import
 
 ENTRYPOINT ["/app/entrypoint.sh"]

@@ -23,13 +23,13 @@ clean:
 	$(REMOVE_CMD) $(IMAGE):alpine || true
 	$(call aggregate-epilogue)
 
-build:	## build docker image: pre-requisite for all targets
+.build:
 	$(call target-prologue)
-	cd $(TAG) && $(BUILD_CMD) -t $(IMAGE):$(TAG) .
+	cd $(TAG) && cp -a $(BIN) . && $(BUILD_CMD) -t $(IMAGE):$(TAG) .
 	$(call target-epilogue-success)
 
 fedora: TAG=fedora
-fedora: build	## Fedora make
+fedora: .build	## Fedora make
 
 help: ## Shows this help
 	@grep -Eh '^[a-zA-Z0-9_/%. -]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

@@ -62,6 +62,7 @@ while (( "$#" )); do
       shift 2
       ;;
     -r|--resolution)
+      RESIZE="-resize $2"
       RESOLUTION="--resolution=$2"
       shift 2
       ;;
@@ -103,10 +104,9 @@ shift 2
 case "$COMMAND" in
   'native')
     # NOTA: crea unscaled-$PICTURE
-  	echo $BIN/make-picture.py $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
-    if (( $# > 0 )); then
-      echo mv unscaled-$PICTURE $1
-    fi
+  	$BIN/make-picture.py $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
+    magick convert unscaled-$PICTURE $RESIZE $PICTURE &>/dev/null
+    rm unscaled-$PICTURE
     ;;
   'scaled')
     ;;

@@ -7,6 +7,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 export PRJ_ROOT				:= $(realpath $(CURDIR))
+export BIN					:= $(PRJ_ROOT)/bin
 export FUNCTIONS			:= $(CURDIR)/functions.mk
 export SHELL				:= /bin/bash
 export COMMA				:= ,
