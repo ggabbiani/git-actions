@@ -1,0 +1,71 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Docker build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the trunk branch
+  push:
+    branches: [ trunk ]
+
+  pull_request:
+    branches: [ trunk ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# env:
+#   ODOX_URL:   https://github.com/ggabbiani/orthodocs/releases/download/v1.2.1
+
+jobs:
+
+  fedora:
+    name: Fedora
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: git-actions:fedora
+      DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/git-actions:fedora
+
+    steps:
+
+      # Checks-out repo on $GITHUB_WORKSPACE
+      - name: Project checkout
+        uses: actions/checkout@v3
+        with:
+          # Number of commits to fetch. 0 indicates all history for all branches
+          # and tags (default 1).
+          fetch-depth: '0'
+
+      # System update and pre-requisite install
+      - name: System setup
+        run: |
+          sudo apt update
+          sudo apt upgrade -y
+
+      # Check if any docker/fedora/* file changed in the last commit.
+      # See also
+      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+      # and
+      # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
+      - name: Docker changes
+        id: docker
+        run: |
+          set +e
+          (git diff --name-only HEAD HEAD~1 | grep -e '^docker/fedora/' >/dev/null && echo yes || echo no) | xargs -I@ echo changed=@ >> "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
+
+      - name: Docker Hub Login
+        if: steps.docker.outputs.changed=='yes'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      # Docker image push after successful build, documentation make and tests execution
+      - name: promote
+        if: steps.docker.outputs.changed=='yes'
+        run: |
+          make docker/fedora
+          docker tag ${IMAGE_NAME} ${DOCKER_IMAGE}
+          docker push ${DOCKER_IMAGE}
+

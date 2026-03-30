@@ -1,0 +1,18 @@
+# .github/dependabot.yml
+version: 2
+updates:
+  # Configurazione per le GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/" # Cerca i workflow in .github/workflows
+    schedule:
+      interval: "daily" # Controlla gli aggiornamenti ogni giorno
+    open-pull-requests-limit: 5 # Non aprire più di 5 PR contemporaneamente
+
+    # Opzionale: assegna le PR a te stesso
+    assignees:
+      - "ggabbiani"
+
+    # Opzionale: aggiungi etichette alle PR create
+    labels:
+      - "dependencies"
+      - "github-actions"
