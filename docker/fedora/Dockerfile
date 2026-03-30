@@ -1,7 +1,7 @@
 # Usiamo l'immagine ufficiale Fedora 42 (o l'ultima stabile disponibile)
 FROM fedora:42
 
-# tool di sistema
+# System tools
 # Usiamo --nodocs per mantenere l'immagine più snella.
 RUN dnf install -y --nodocs \
     python3 \
