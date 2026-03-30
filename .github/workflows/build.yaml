@@ -25,7 +25,7 @@ jobs:
 
     env:
       IMAGE_NAME: git-actions:fedora
-      DOCKER_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/git-actions:fedora
+      DOCKER_IMAGE: ggabbiani/git-actions:fedora
 
     steps:
 
