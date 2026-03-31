@@ -103,9 +103,10 @@ shift 2
 
 case "$COMMAND" in
   'native')
-    # NOTA: crea unscaled-$PICTURE
-  	$APP/make-picture.py $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
-    magick convert unscaled-$PICTURE $RESIZE $PICTURE &>/dev/null
+  	xvfb-run -d $APP/make-picture.py -v 4 $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
+    # echo magick convert unscaled-$PICTURE $RESIZE $PICTURE
+    magick convert unscaled-$PICTURE $RESIZE $PICTURE
+    # magick convert unscaled-$PICTURE $RESIZE $PICTURE &>/dev/null
     rm unscaled-$PICTURE
     ;;
   'scaled')
