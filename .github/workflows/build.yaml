@@ -46,7 +46,7 @@ jobs:
         id: docker
         run: |
           set +e
-          (git diff --name-only HEAD HEAD~1 | grep -e '^docker/fedora/' >/dev/null && echo yes || echo no) | xargs -I@ echo changed=@ >> "$GITHUB_OUTPUT"
+          (git diff --name-only HEAD HEAD~1 | grep -e '^docker/fedora/' -e '^app/' >/dev/null && echo yes || echo no) | xargs -I@ echo changed=@ >> "$GITHUB_OUTPUT"
           cat "$GITHUB_OUTPUT"
 
       - name: Docker Hub Login
