@@ -1,8 +1,12 @@
 #!/bin/bash
-###############################################################################
 #
+# insert a brief description here
 #
+# This file is part of the 'Git Actions' (GA) project.
 #
+# Copyright © 2026, Giampiero Gabbiani <giampiero@gabbiani.org>
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
 #
 set -e # exit immediately in case of error
 ROOT="$(realpath $(dirname $0)/..)"
