@@ -98,16 +98,16 @@ if [ -z "$SCRIPT" ]; then
 fi
 
 COMMAND=$1
-PICTURE=$2
+PIC_PATH=$2
+PIC_DIR=$(dirname "$PIC_PATH")
+PIC_FILE=$(basename "$PIC_PATH")
 shift 2
 
 case "$COMMAND" in
   'native')
-  	xvfb-run -d $APP/make-picture.py -v 4 $RESOLUTION $CAMERA $PROJECTION $SCRIPT $PICTURE
-    # echo magick convert unscaled-$PICTURE $RESIZE $PICTURE
-    magick convert unscaled-$PICTURE $RESIZE $PICTURE
-    # magick convert unscaled-$PICTURE $RESIZE $PICTURE &>/dev/null
-    rm unscaled-$PICTURE
+  	xvfb-run -d $APP/make-picture.py -v 4 $RESOLUTION $CAMERA $PROJECTION "$SCRIPT" "$PIC_PATH"
+    magick "$PIC_DIR/unscaled-$PIC_FILE" $RESIZE "$PIC_PATH"
+    rm "$PIC_DIR/unscaled-$PIC_FILE"
     ;;
   'scaled')
     ;;

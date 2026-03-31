@@ -25,10 +25,10 @@ clean:
 
 .build:
 	$(call target-prologue)
-	cd $(TAG) && cp -a $(APP) . && $(BUILD_CMD) -t $(IMAGE):$(TAG) .
+	cd $(DISTRO) && cp -a $(APP) . && $(BUILD_CMD) -t $(IMAGE):$(DISTRO) .
 	$(call target-epilogue-success)
 
-fedora: TAG=fedora
+fedora: DISTRO=fedora
 fedora: .build	## Fedora make
 
 help: ## Shows this help
