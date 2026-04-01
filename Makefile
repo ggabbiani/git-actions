@@ -6,6 +6,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+# 'eager' variables mostly related to the project path structure
 export PRJ_ROOT				:= $(realpath $(CURDIR))
 export BIN					:= $(PRJ_ROOT)/bin
 export FUNCTIONS			:= $(CURDIR)/functions.mk
@@ -13,21 +14,17 @@ export SHELL				:= /bin/bash
 export COMMA				:= ,
 
 include $(FUNCTIONS)
-MAKEFLAGS += -s
+#MAKEFLAGS += -s
 
-# function dependant variables
-# $(info SCAD path: $(call scad-path))
-export SCAD		:= $(if $(call scad-path),$(BIN)/openscad.py -m make --view axes,$(warning WARN: OpenSCAD missing))
-# $(info SCAD command: $(SCAD))
-export WHICH 	:= $(if $(call is-win),where,which)
-export IMVER 	:= $(shell convert --version 2>&1)
-export IMCMD 	:= $(if $(findstring deprecated,$(IMVER)),$(shell $(WHICH) magick 2>/dev/null),$(shell $(WHICH) convert 2>/dev/null))
-export WGET		:= $(shell $(call which) $(if $(call is-mac), curl,wget))
+# 'lazy' function dependant variables
+export SCAD		= $(if $(call scad-path),$(BIN)/openscad.py -m make --view axes,$(warning WARN: OpenSCAD missing))
+export WHICH 	= $(if $(call is-win),where,which)
+export IMVER 	= $(shell convert --version 2>&1)
+export IMCMD 	= $(if $(findstring deprecated,$(IMVER)),$(shell $(WHICH) magick 2>/dev/null),$(shell $(WHICH) convert 2>/dev/null))
+export WGET		= $(shell $(call which) $(if $(call is-mac), curl,wget))
 
 .DEFAULT_GOAL := help
 
-# docs uses generated test scad files, so it's important to be executed AFTER
-# tests creation
 all: docker/all
 
 clean: docker/clean
