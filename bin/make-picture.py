@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+
 #
 # picture creation helper for makefile usage
 #
-# This file is part of the 'OpenSCAD Foundation Library' (OFL) project.
+# This file is part of the 'Git Actions' (GA) project.
 #
-# Copyright © 2021, Giampiero Gabbiani <giampiero@gabbiani.org>
+# Copyright © 2026, Giampiero Gabbiani <giampiero@gabbiani.org>
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
