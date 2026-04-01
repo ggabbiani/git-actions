@@ -37,7 +37,7 @@ jobs:
           # and tags (default 1).
           fetch-depth: '0'
 
-      # Check if any docker/fedora/* file changed in the last commit.
+      # Check if anything in docker/fedora/* or /bin/* changed with the last commit.
       # See also
       # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
       # and
