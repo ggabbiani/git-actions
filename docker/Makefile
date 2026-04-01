@@ -1,4 +1,4 @@
-# insert a brief description here
+# Docker build
 #
 # This file is part of the 'Git Actions' (GA) project.
 #
@@ -26,7 +26,7 @@ clean: ## Clean all local Docker images
 
 .build:
 	$(call target-prologue)
-	cd $(DISTRO) && mkdir app && cp -a \
+	cd $(DISTRO) && ( [ -d app ] || mkdir app ) && cp -a \
 		$(BIN)/entry-point.sh \
 		$(BIN)/functions.sh \
 		$(BIN)/make-picture.py \
