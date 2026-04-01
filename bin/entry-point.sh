@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Entry point for scad image builder.
+# Entry point for the scad image builder.
 #
 # This file is part of the 'Git Actions' (GA) project.
 #
