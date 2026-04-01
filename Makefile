@@ -22,10 +22,10 @@ all: docker/all	## General build
 
 clean: docker/clean
 
-check: ## preliminary checks for local builds
-ifndef VIRTUAL_ENV
-  $(call msg-error,Python Virtual Environment not active: type 'source .venv/bin/activate')
-endif
+# check: ## preliminary checks for local builds
+# ifndef VIRTUAL_ENV
+#   $(call msg-error,Python Virtual Environment not active: type 'source .venv/bin/activate')
+# endif
 
 docker/%: ALWAYS ## type `make -s docker/help`
 	$(call make_sub)
