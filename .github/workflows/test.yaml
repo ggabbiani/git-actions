@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Creazione immagine
-        uses: ./scad2image/ # Punto alla root del mio repo dove c'è action.yml
+        uses: ./scad2image-action/ # Punto alla root del mio repo dove c'è action.yml
         with:
           resolution: '800x600'
           script: 'tests/logo.scad'   # Path relativo alla root del repo
