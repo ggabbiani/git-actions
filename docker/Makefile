@@ -18,18 +18,24 @@ BUILD_CMD	= docker build
 
 all: fedora	## Build images in all the target platforms
 
-clean:
+clean: ## Clean all local Docker images
 	$(call aggregate-prologue)
-	$(REMOVE_CMD) $(IMAGE):alpine || true
+	$(REMOVE_CMD) $(IMAGE):fedora || true
 	$(call aggregate-epilogue)
 
 .build:
 	$(call target-prologue)
-	cd $(DISTRO) && cp -a $(APP) . && $(BUILD_CMD) -t $(IMAGE):$(DISTRO) .
+	cd $(DISTRO) && cp -a \
+		$(BIN)/entry-point.sh \
+		$(BIN)/functions.sh \
+		$(BIN)/make-picture.py \
+		$(BIN)/ofl.py \
+		app/ \
+	&& $(BUILD_CMD) -t $(IMAGE):$(DISTRO) .
 	$(call target-epilogue-success)
 
 fedora: DISTRO=fedora
-fedora: .build	## Fedora make
+fedora: .build	## Builds a Fedora based image
 
 help: ## Shows this help
 	@grep -Eh '^[a-zA-Z0-9_/%. -]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'

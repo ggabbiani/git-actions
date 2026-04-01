@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #
 # insert a brief description here
 #
@@ -8,6 +9,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
+
 set -e # exit immediately in case of error
 ROOT="$(realpath $(dirname $0)/..)"
 APP=$ROOT/app
@@ -17,18 +19,13 @@ trap 'on_exit $? $test' EXIT
 help() {
 cat <<EoH
 
-$(basename $0) [-?|-h|--help] [-d|--dry-run] [-s|--silent] [-c|--camera <position>] [-p|--projection <projection>] [-r|--resolution <resolution>] [-s|--script <script name>] COMMAND PICTURE
+$(basename $0) [-?|-h|--help] [-c|--camera <position>] [-p|--projection <projection>] [-r|--resolution <resolution>] [-s|--script <script name>] PICTURE
 
   -?|-h|--help      this help
-  -n|--native       Execute OpenSCAD script without any scaling nor check
   -c|--camera       OpenSCAD camera position
   -p|--projection   'ortho' or 'perspective'
   -r|--resolution   target resolution in 'openscad' format i.e. 800x600
   -s|--script       OpenSCAD script
-
-  COMMAND
-    'native'
-    'scaled'
 
 EoH
 exit 0
@@ -91,33 +88,22 @@ done
 # set positional arguments in their proper place
 eval set -- "$POSITIONALS"
 
-if (( $# < 2 )); then
-  fail 2 "Missing COMMAND aand/or PICTURE."
+if (( $# < 1 )); then
+  fail 2 "Picture name expected"
 fi
 if [ -z "$RESOLUTION" ]; then
-    fail 3 "RESOLUTION expected."
+  fail 3 "RESOLUTION expected."
 fi
 if [ -z "$SCRIPT" ]; then
-    fail 4 "SCRIPT expected."
+  fail 4 "SCRIPT expected."
 fi
 
-COMMAND=$1
-PIC_PATH=$2
+PIC_PATH=$1
 PIC_DIR=$(dirname "$PIC_PATH")
 PIC_FILE=$(basename "$PIC_PATH")
-shift 2
+shift 1
 
-case "$COMMAND" in
-  'native')
-  	xvfb-run -d $APP/make-picture.py -v 4 $RESOLUTION $CAMERA $PROJECTION "$SCRIPT" "$PIC_PATH"
-    magick "$PIC_DIR/unscaled-$PIC_FILE" $RESIZE "$PIC_PATH"
-    rm "$PIC_DIR/unscaled-$PIC_FILE"
-    ;;
-  'scaled')
-    ;;
-  *)
-    fail 3 "Unsupported command '$COMMAND'"
-    ;;
-esac
-
+xvfb-run -d $APP/make-picture.py $RESOLUTION $CAMERA $PROJECTION "$SCRIPT" "$PIC_PATH"
+magick "$PIC_DIR/unscaled-$PIC_FILE" $RESIZE "$PIC_PATH"
+rm "$PIC_DIR/unscaled-$PIC_FILE"
 exit 0
