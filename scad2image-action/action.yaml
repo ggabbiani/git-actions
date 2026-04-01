@@ -1,0 +1,41 @@
+name: 'OpenSCAD to image'
+description: 'Creates hires images from OpenSCAD script'
+branding:
+  icon: 'package'
+  color: 'blue'
+
+inputs:
+  picture:
+    description: 'Target picture name (with extension)'
+    required: true
+
+  resolution:
+    description: 'Target resolution in ''openscad'' format i.e. 800x600'
+    required: true
+
+  script:
+    description: 'OpenSCAD script'
+    required: true
+
+  camera:
+    description: 'OpenSCAD camera position'
+    required: false
+
+  projection:
+    description: '''ortho'' or ''perspective'''
+    required: false
+    default: 'ortho'
+
+runs:
+  using: 'docker'
+  image: 'docker://ggabbiani/git-actions:fedora'
+  args:
+    - --resolution
+    - ${{ inputs.resolution }}
+    - --camera
+    - ${{ inputs.camera }}
+    - --projection
+    - ${{ inputs.projection }}
+    - --script
+    - ${{ inputs.script }}
+    - ${{ inputs.picture }}

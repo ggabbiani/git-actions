@@ -55,20 +55,28 @@ while (( "$#" )); do
       shift
       ;;
     -c|--camera)
-      CAMERA="--camera=$2"
+      if [ -n "$2" ]; then
+        CAMERA="--camera=$2"
+      fi
       shift 2
       ;;
     -p|--projection)
-      PROJECTION="--projection=$2"
+      if [ -n "$2" ]; then
+        PROJECTION="--projection=$2"
+      fi
       shift 2
       ;;
     -r|--resolution)
-      RESIZE="-resize $2"
-      RESOLUTION="--resolution=$2"
+      if [ -n "$2" ]; then
+        RESIZE="-resize $2"
+        RESOLUTION="--resolution=$2"
+      fi
       shift 2
       ;;
     -s|--script)
-      SCRIPT="--ofl-script=$2"
+      if [ -n "$2" ]; then
+        SCRIPT="--ofl-script=$2"
+      fi
       shift 2
       ;;
     --) # end argument parsing
@@ -80,7 +88,9 @@ while (( "$#" )); do
       fail 1 "Unsupported flag $1"
       ;;
     *) # preserve positional arguments
-      POSITIONALS="$POSITIONALS $1"
+      if [ -n "$1" ]; then
+        POSITIONALS="$POSITIONALS $1"
+      fi
       shift
       ;;
   esac
@@ -99,6 +109,9 @@ if [ -z "$SCRIPT" ]; then
 fi
 
 PIC_PATH=$1
+if [ -z "$1" ]; then
+  fail 3 "Valid picture name expected"
+fi
 PIC_DIR=$(dirname "$PIC_PATH")
 PIC_FILE=$(basename "$PIC_PATH")
 shift 1
