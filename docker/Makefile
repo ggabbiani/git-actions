@@ -26,7 +26,7 @@ clean: ## Clean all local Docker images
 
 .build:
 	$(call target-prologue)
-	cd $(DISTRO) && cp -a \
+	cd $(DISTRO) && mkdir app && cp -a \
 		$(BIN)/entry-point.sh \
 		$(BIN)/functions.sh \
 		$(BIN)/make-picture.py \
