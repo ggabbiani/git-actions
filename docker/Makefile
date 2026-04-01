@@ -16,11 +16,14 @@ BUILD_CMD	= docker build
 
 .DEFAULT_GOAL := help
 
+$(info REMOVE_CMD=$(REMOVE_CMD))
+
 all: fedora	## Build images in all the target platforms
 
 clean: ## Clean all local Docker images
 	$(call aggregate-prologue)
 	$(REMOVE_CMD) $(IMAGE):fedora || true
+	docker image prune --build-cache -f
 	$(call aggregate-epilogue)
 
 .build:
