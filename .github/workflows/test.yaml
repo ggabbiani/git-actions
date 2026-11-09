@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del codice
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Creazione immagine
         uses: ./scad2image-action/ # Punto alla root del mio repo dove c'è action.yml
